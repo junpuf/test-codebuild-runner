@@ -6,3 +6,8 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - run: echo "hello world"
+  run-nvidia-smi:
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - run: nvidia-smi
