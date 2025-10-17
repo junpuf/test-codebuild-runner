@@ -7,5 +7,5 @@ jobs:
     steps:
       - run: cat /etc/motd
       - run: nvidia-smi
-      - run: echo "Workspace path: ${{ github.workspace }}"
+      - run: echo "Workspace path ${{ github.workspace }}"
       - run: cat ${{ github.workspace }}/the_cicd_dance.txt
