@@ -5,10 +5,15 @@ jobs:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - name: Checkout code
+      - name: check DLAMI stuff
+        shell: bash
+        run: |
+          cat /etc/motd
+          nvidia-smi
+      - nane: checkout github code
         uses: actions/checkout@v4
-      - run: cat /etc/motd
-      - run: nvidia-smi
-      - run: echo "Workspace path ${{ github.workspace }}"
-      - run: cat ${{ github.workspace }}/the_cicd_dance.txt
-      - run: cat the_cicd_dance.txt
+      - name: check github files
+        shell: bash
+        run: |
+          ls -al
+          cat README.md
