@@ -1,9 +1,0 @@
-name: Hello World
-on: [push]
-jobs:
-  Hello-World-Job:
-    runs-on:
-      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-        fleet: test-codebuild-runner
-    steps:
-      - run: echo "Hello World"
