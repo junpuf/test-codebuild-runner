@@ -10,3 +10,4 @@ jobs:
       - run: nvidia-smi
       - run: pwd
       - run: ls -la
+      - run: cat the_cicd_dance.txt
