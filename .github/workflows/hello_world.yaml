@@ -8,3 +8,5 @@ jobs:
       - run: echo "hello world"
       - run: cat /etc/motd
       - run: nvidia-smi
+      - run: pwd
+      - run: ls -la
