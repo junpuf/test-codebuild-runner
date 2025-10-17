@@ -3,6 +3,6 @@ on: [push]
 jobs:
   Hello-World-Job:
     runs-on:
-      - codebuild-junpu-test-reserved-fleet-and-runner-${{ github.run_id }}-${{ github.run_attempt }}
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - run: echo "Hello World"
