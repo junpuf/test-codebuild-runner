@@ -11,3 +11,4 @@ jobs:
       - run: nvidia-smi
       - run: echo "Workspace path ${{ github.workspace }}"
       - run: cat ${{ github.workspace }}/the_cicd_dance.txt
+      - run: cat the_cicd_dance.txt
