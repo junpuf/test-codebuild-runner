@@ -10,7 +10,7 @@ jobs:
         run: |
           cat /etc/motd
           nvidia-smi
-      - nane: checkout github code
+      - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
         shell: bash
