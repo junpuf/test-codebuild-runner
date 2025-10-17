@@ -10,6 +10,7 @@ jobs:
         run: |
           cat /etc/motd
           nvidia-smi
+          docker --version
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
