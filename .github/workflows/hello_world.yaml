@@ -5,9 +5,7 @@ jobs:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - run: echo "hello world"
       - run: cat /etc/motd
       - run: nvidia-smi
-      - run: pwd
-      - run: ls -la
-      - run: cat the_cicd_dance.txt
+      - run: echo "Workspace path: ${{ github.workspace }}"
+      - run: cat ${{ github.workspace }}/the_cicd_dance.txt
