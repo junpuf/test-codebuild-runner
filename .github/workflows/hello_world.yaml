@@ -1,7 +1,7 @@
-name: Hello World
+name: hello world
 on: [push]
 jobs:
-  Hello-World-Job:
+  hello-world-job:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
