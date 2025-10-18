@@ -11,9 +11,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          uv self update
-          uv python install
+          pip uninstall uv
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -30,9 +28,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          uv self update
-          uv python install
+          pip uninstall uv
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -50,9 +46,7 @@ jobs:
           cat /etc/motd
           docker --version
           nvidia-smi
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          uv self update
-          uv python install
+          pip uninstall uv
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
