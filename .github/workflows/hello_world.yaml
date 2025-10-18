@@ -4,7 +4,7 @@ jobs:
   default-job:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-      fleet: test-action-runner-default
+        fleet:test-action-runner-default
     steps:
       - name: check DLAMI stuff
         shell: bash
@@ -20,8 +20,9 @@ jobs:
         run: |
           cat README.md
   x86-cpu-job:
-    - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-    fleet: test-action-runner-x86-cpu
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+        fleet:test-action-runner-x86-cpu
     steps:
       - name: check DLAMI stuff
         shell: bash
@@ -37,8 +38,9 @@ jobs:
         run: |
           cat README.md
   x86-single-gpu-job:
-    - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-    fleet: test-action-runner-x86-single-gpu
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+        fleet:test-action-runner-x86-single-gpu
     steps:
       - name: check DLAMI stuff
         shell: bash
