@@ -1,15 +1,15 @@
 name: hello world
 on: [push]
 jobs:
-  hello-world-job:
+  default-job:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+      fleet: test-action-runner-default
     steps:
       - name: check DLAMI stuff
         shell: bash
         run: |
           cat /etc/motd
-          nvidia-smi
           docker --version
           python3 --version
           python3 -m pip install uv 
@@ -18,5 +18,40 @@ jobs:
       - name: check github files
         shell: bash
         run: |
-          ls -al
           cat README.md
+  x86-cpu-job:
+    - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+    fleet: test-action-runner-x86-cpu
+    steps:
+      - name: check DLAMI stuff
+        shell: bash
+        run: |
+          cat /etc/motd
+          docker --version
+          python3 --version
+          python3 -m pip install uv 
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: check github files
+        shell: bash
+        run: |
+          cat README.md
+  x86-single-gpu-job:
+    - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+    fleet: test-action-runner-x86-single-gpu
+    steps:
+      - name: check DLAMI stuff
+        shell: bash
+        run: |
+          cat /etc/motd
+          docker --version
+          python3 --version
+          python3 -m pip install uv 
+          nvidia-smi
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: check github files
+        shell: bash
+        run: |
+          cat README.md
+    
