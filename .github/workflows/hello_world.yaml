@@ -6,10 +6,10 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-default
     steps:
-      - name: runner setup
-        run: .github/scripts/runner_setup.sh
       - name: checkout github code
         uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
       - name: check github files
         shell: bash
         run: |
@@ -19,10 +19,10 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-x86-cpu
     steps:
-      - name: runner setup
-        run: .github/scripts/runner_setup.sh
       - name: checkout github code
         uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
       - name: check github files
         shell: bash
         run: |
@@ -32,10 +32,10 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-x86-single-gpu
     steps:
-      - name: runner setup
-        run: .github/scripts/runner_setup.sh && nvidia-smi
       - name: checkout github code
         uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh && nvidia-smi
       - name: check github files
         shell: bash
         run: |
