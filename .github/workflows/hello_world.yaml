@@ -13,6 +13,8 @@ jobs:
           docker --version
           python3 --version
           python3 -m pip install uv 
+          ls -la /var/cache/
+          ls -la /var/cache/codebuild
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -31,6 +33,8 @@ jobs:
           docker --version
           python3 --version
           python3 -m pip install uv 
+          ls -la /var/cache/
+          ls -la /var/cache/codebuild
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -50,6 +54,8 @@ jobs:
           python3 --version
           python3 -m pip install uv 
           nvidia-smi
+          ls -la /var/cache/
+          ls -la /var/cache/codebuild
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
