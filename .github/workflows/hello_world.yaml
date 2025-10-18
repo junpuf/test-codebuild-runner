@@ -6,15 +6,15 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-default
     steps:
-      - name: check DLAMI stuff
+      - name: runner setup
         shell: bash
         run: |
+          cat /etc/motd
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv venv build --python 3.11
           uv venv test --python 3.11
           uv venv release --python 3.11
-          cat /etc/motd
           docker --version
       - name: checkout github code
         uses: actions/checkout@v4
@@ -27,15 +27,15 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-x86-cpu
     steps:
-      - name: check DLAMI stuff
+      - name: runner setup
         shell: bash
         run: |
+          cat /etc/motd
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv venv build --python 3.11
           uv venv test --python 3.11
           uv venv release --python 3.11
-          cat /etc/motd
           docker --version
       - name: checkout github code
         uses: actions/checkout@v4
@@ -48,17 +48,17 @@ jobs:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:test-action-runner-x86-single-gpu
     steps:
-      - name: check DLAMI stuff
+      - name: runner setup
         shell: bash
         run: |
+          cat /etc/motd
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv venv build --python 3.11
           uv venv test --python 3.11
           uv venv release --python 3.11
-          cat /etc/motd
-          nvidia-smi
           docker --version
+          nvidia-smi
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
