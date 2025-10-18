@@ -13,7 +13,9 @@ jobs:
           docker --version
           python3 --version
           python3 -m pip install uv 
-          sudo yum install s3fs-fuse
+          sudo dnf update -y
+          sudo dnf install epel-release -y
+          sudo dnf install s3fs-fuse -y
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -32,7 +34,9 @@ jobs:
           docker --version
           python3 --version
           python3 -m pip install uv 
-          sudo yum install s3fs-fuse
+          sudo dnf update -y
+          sudo dnf install epel-release -y
+          sudo dnf install s3fs-fuse -y
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -51,7 +55,9 @@ jobs:
           docker --version
           python3 --version
           python3 -m pip install uv 
-          sudo yum install s3fs-fuse
+          sudo dnf update -y
+          sudo dnf install epel-release -y
+          sudo dnf install s3fs-fuse -y
           nvidia-smi
       - name: checkout github code
         uses: actions/checkout@v4
