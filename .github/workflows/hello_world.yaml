@@ -11,7 +11,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          pip uninstall uv
+          pip uninstall uv -y
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -28,7 +28,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          pip uninstall uv
+          pip uninstall uv -y
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -46,7 +46,7 @@ jobs:
           cat /etc/motd
           docker --version
           nvidia-smi
-          pip uninstall uv
+          pip uninstall uv -y
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
