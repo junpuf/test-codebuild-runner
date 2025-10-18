@@ -1,3 +1,5 @@
+[![hello world](https://github.com/junpuf/test-codebuild-runner/actions/workflows/hello_world.yaml/badge.svg)](https://github.com/junpuf/test-codebuild-runner/actions/workflows/hello_world.yaml)
+
 "The CI/CD Dance"
 
 Automating day and night, GitHub Actions make code right, Testing, building, all in flow, Making deployments swift to go.
