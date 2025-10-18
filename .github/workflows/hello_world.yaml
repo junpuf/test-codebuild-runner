@@ -11,6 +11,7 @@ jobs:
           cat /etc/motd
           nvidia-smi
           docker --version
+          python3 --version
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
