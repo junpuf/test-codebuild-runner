@@ -9,11 +9,11 @@ jobs:
       - name: check DLAMI stuff
         shell: bash
         run: |
-          cat /etc/motd
-          docker --version
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
-          uv python install
+          uv venv build_env --python 3.11
+          cat /etc/motd
+          docker --version
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -28,11 +28,11 @@ jobs:
       - name: check DLAMI stuff
         shell: bash
         run: |
-          cat /etc/motd
-          docker --version
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
-          uv python install
+          uv venv build_env --python 3.11
+          cat /etc/motd
+          docker --version
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -47,12 +47,12 @@ jobs:
       - name: check DLAMI stuff
         shell: bash
         run: |
-          cat /etc/motd
-          docker --version
-          nvidia-smi
           curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
-          uv python install
+          uv venv build_env --python 3.11
+          cat /etc/motd
+          nvidia-smi
+          docker --version
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
