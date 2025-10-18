@@ -12,6 +12,7 @@ jobs:
           nvidia-smi
           docker --version
           python3 --version
+          python3 -m pip install uv 
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
