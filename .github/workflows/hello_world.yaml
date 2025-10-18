@@ -7,15 +7,7 @@ jobs:
         fleet:test-action-runner-default
     steps:
       - name: runner setup
-        shell: bash
-        run: |
-          cat /etc/motd
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
-          uv self update
-          uv venv build --python 3.11
-          uv venv test --python 3.11
-          uv venv release --python 3.11
-          docker --version
+        run: .github/scripts/runner_setup.sh
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -28,15 +20,7 @@ jobs:
         fleet:test-action-runner-x86-cpu
     steps:
       - name: runner setup
-        shell: bash
-        run: |
-          cat /etc/motd
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
-          uv self update
-          uv venv build --python 3.11
-          uv venv test --python 3.11
-          uv venv release --python 3.11
-          docker --version
+        run: .github/scripts/runner_setup.sh
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
@@ -49,16 +33,7 @@ jobs:
         fleet:test-action-runner-x86-single-gpu
     steps:
       - name: runner setup
-        shell: bash
-        run: |
-          cat /etc/motd
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
-          uv self update
-          uv venv build --python 3.11
-          uv venv test --python 3.11
-          uv venv release --python 3.11
-          docker --version
-          nvidia-smi
+        run: .github/scripts/runner_setup.sh && nvidia-smi
       - name: checkout github code
         uses: actions/checkout@v4
       - name: check github files
