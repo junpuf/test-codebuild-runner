@@ -11,7 +11,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/use/local/bin" sh
+          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv python install
       - name: checkout github code
@@ -30,7 +30,7 @@ jobs:
         run: |
           cat /etc/motd
           docker --version
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/use/local/bin" sh
+          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv python install
       - name: checkout github code
@@ -50,7 +50,7 @@ jobs:
           cat /etc/motd
           docker --version
           nvidia-smi
-          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/use/local/bin" sh
+          curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR="/usr/local/bin" sh
           uv self update
           uv python install
       - name: checkout github code
