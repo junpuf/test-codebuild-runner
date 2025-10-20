@@ -10,6 +10,7 @@ docker rm -f ${CONTAINER_NAME} || true
 docker run --name ${CONTAINER_NAME} \
     -d --gpus=all --entrypoint /bin/bash \
     -v ${HOME}/.cache/huggingface:/root/.cache/huggingface \
+    -v ${HOME}/.cache/sglang:/root/.cache/sglang \
     -p 30000:30000 \
     -e "HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}" \
     ${IMAGE_URI} \
