@@ -25,9 +25,8 @@ jobs:
       - name: build ray image
         shell: bash
         run: |
-          cd docker/ray
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
-          DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date +"%Y-%m-%d_%H-%M-%S") --tag ray:latest --progress plain -f .
+          DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date +"%Y-%m-%d_%H-%M-%S") --tag ray:latest --progress plain -f docker/ray/Dockerfile .
           docker tag ray:latest 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
           docker push 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
   sglang-x86-image-build:
@@ -42,9 +41,8 @@ jobs:
       - name: build sglang image
         shell: bash
         run: |
-          cd docker/sglang
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
-          DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date +"%Y-%m-%d_%H-%M-%S") --tag sglang:latest --progress plain -f .
+          DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date +"%Y-%m-%d_%H-%M-%S") --tag sglang:latest --progress plain -f docker/sglang/Dockerfile .
           docker tag sglang:latest 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
           docker push 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
   x86-1gpu-image-test:
