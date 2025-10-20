@@ -3,8 +3,8 @@ LABEL maintainer="junpufan@gmail.com"
 
 
 ARG CACHE_BUST_KEY=0
-RUN sudo apt-get update \
- && sudo apt-get upgrade -y \
- && sudo apt-get autoremove -y \
- && sudo apt-get clean \
- && sudo rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get autoremove -y \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
