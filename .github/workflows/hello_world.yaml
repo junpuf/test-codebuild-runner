@@ -76,3 +76,29 @@ jobs:
         run: |
           nvidia-smi
           docker/sglang/bench_serving_qwen3_0.6b.sh
+  ray-image-release:
+    needs: [ray-1gpu-image-test]
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
+      - name: check github files
+        shell: bash
+        run: |
+          echo "making release"
+  sglang-image-release:
+    needs: [sglang-1gpu-image-test]
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
+      - name: check github files
+        shell: bash
+        run: |
+          echo "making release"
