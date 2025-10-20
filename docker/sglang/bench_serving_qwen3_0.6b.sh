@@ -5,11 +5,13 @@ IMAGE_URI="152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest"
 HUGGING_FACE_HUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id HUGGING_FACE_HUB_TOKEN --query SecretString --output text)
 
 # pull the container and cleanup old container if exist
+echo "pulling image and cleanup old container if exist..."
 aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
 docker pull ${IMAGE_URI}
 docker stop ${CONTAINER_NAME} || true
 docker rm -f ${CONTAINER_NAME} || true
 # run container with model
+echo "start running container for model serving..."
 docker run --name ${CONTAINER_NAME} \
     -d --gpus=all --entrypoint /bin/bash \
     -v ${HOME}/.cache/huggingface:/root/.cache/huggingface \
@@ -27,8 +29,11 @@ mkdir -p ${HOME}/dataset
 if [ ! -f ${HOME}/dataset/ShareGPT_V3_unfiltered_cleaned_split.json ]; then
     echo "Downloading ShareGPT dataset..."
     wget -P ${HOME}/dataset https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json
+else
+    echo "ShareGPT dataset already exists. Skipping download."
 fi
 # run serving benchmark
+echo "start running serving benchmark workflow..."
 docker exec ${CONTAINER_NAME} python3 -m sglang.bench_serving \
     --backend sglang \
   	--host 127.0.0.1 --port 30000 \
@@ -37,5 +42,6 @@ docker exec ${CONTAINER_NAME} python3 -m sglang.bench_serving \
     --dataset-name sharegpt \
     --dataset-path /dataset/ShareGPT_V3_unfiltered_cleaned_split.json
 # cleanup container
+echo "cleaning up resources..."
 docker stop ${CONTAINER_NAME}
 docker rm -f ${CONTAINER_NAME}
