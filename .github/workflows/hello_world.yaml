@@ -74,19 +74,9 @@ jobs:
       - name: pull docker images
         shell: bash
         run: |
+          docker stop $(docker ps -q)
+          docker rm $(docker ps -a -q)
           nvidia-smi
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
           docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
-          HUGGING_FACE_HUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id HUGGING_FACE_HUB_TOKEN --query SecretString --output text)
-          docker run --rm \
-            -v ${HOME}/.cache/huggingface:/root/.cache/huggingface \
-            -e "HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}" \
-            --entrypoint /bin/bash \
-            --gpus=all \
-            152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest \
-            -c "python -m sglang.launch_server --model-path Qwen/Qwen3-0.6B --reasoning-parser qwen3 && \
-            python3 -m sglang.bench_serving \
-            --backend sglang \
-            --host 127.0.0.1 --port 30000 \
-            --num-prompts 1000 \
-            --model Qwen/Qwen3-0.6B"
+          docker/sglang/test.sh
