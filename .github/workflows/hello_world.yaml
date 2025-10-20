@@ -74,8 +74,8 @@ jobs:
       - name: pull docker images
         shell: bash
         run: |
-          docker stop $(docker ps -q)
-          docker rm $(docker ps -a -q)
+          docker kill $(docker ps -q) || true
+          docker rm -f $(docker ps -a -q)
           nvidia-smi
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
           docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
