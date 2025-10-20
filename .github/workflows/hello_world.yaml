@@ -83,7 +83,7 @@ jobs:
             -e "HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}" \
             --entrypoint /bin/bash \
             --gpus=all \
-            152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest \
+            152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest \
             -c "python -m sglang.launch_server --model-path Qwen/Qwen3-0.6B --reasoning-parser qwen3 && \
             python3 -m sglang.bench_serving \
             --backend sglang \
