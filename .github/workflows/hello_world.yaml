@@ -4,7 +4,6 @@ jobs:
   default-job:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-        fleet:test-action-runner-default
     steps:
       - name: checkout github code
         uses: actions/checkout@v4
@@ -14,10 +13,10 @@ jobs:
         shell: bash
         run: |
           cat README.md
-  x86-cpu-job:
+  ray-x86-image-build:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-        fleet:test-action-runner-x86-cpu
+        fleet:ray-x86-image-builder
     steps:
       - name: checkout github code
         uses: actions/checkout@v4
@@ -26,18 +25,40 @@ jobs:
       - name: check github files
         shell: bash
         run: |
-          cat README.md
-  x86-single-gpu-job:
+          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
+          "DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date %Y-%m-%d %H:%M:%S) --tag ray:latest --progress plain -f docker/ray/Dockerfile ."
+          docker tag ray:latest 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
+          docker push 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
+  sglang-x86-image-build:
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
-        fleet:test-action-runner-x86-single-gpu
+        fleet:sglang-x86-image-builder
     steps:
       - name: checkout github code
         uses: actions/checkout@v4
       - name: runner setup
-        run: .github/scripts/runner_setup.sh && nvidia-smi
+        run: .github/scripts/runner_setup.sh
       - name: check github files
         shell: bash
         run: |
-          cat README.md
+          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
+          "DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date %Y-%m-%d %H:%M:%S) --tag sglang:latest --progress plain -f docker/sglang/Dockerfile ."
+          docker tag sglang:latest 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
+          docker push 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
+  x86-1gpu-image-test:
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+        fleet:x86-1gpu-image-tester
+    steps:
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
+      - name: check github files
+        shell: bash
+        run: |
+          nvidia-smi
+          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
+          docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
+          docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
     
