@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+docker stop ${CONTAINER_NAME} || true
+docker rm -f ${CONTAINER_NAME} || true
 CONTAINER_NAME=sglang_test
 IMAGE_URI="152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest"
 HUGGING_FACE_HUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id HUGGING_FACE_HUB_TOKEN --query SecretString --output text)
