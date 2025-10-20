@@ -45,8 +45,24 @@ jobs:
           DOCKER_BUILDKIT=1 docker build --build-arg CACHE_BUST_KEY=$(date +"%Y-%m-%d_%H-%M-%S") --tag sglang:latest --progress plain -f docker/sglang/Dockerfile .
           docker tag sglang:latest 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
           docker push 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
-  x86-1gpu-image-test:
-    needs: [sglang-x86-image-build, ray-x86-image-build]
+  ray-1gpu-image-test:
+    needs: [ray-x86-image-build]
+    runs-on:
+      - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
+        fleet:x86-1gpu-image-tester
+    steps:
+      - name: checkout github code
+        uses: actions/checkout@v4
+      - name: runner setup
+        run: .github/scripts/runner_setup.sh
+      - name: pull docker images
+        shell: bash
+        run: |
+          nvidia-smi
+          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
+          docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
+  sglang-1gpu-image-test:
+    needs: [sglang-x86-image-build]
     runs-on:
       - codebuild-test-codebuild-runner-reserved-fleet-${{ github.run_id }}-${{ github.run_attempt }}
         fleet:x86-1gpu-image-tester
@@ -61,5 +77,3 @@ jobs:
           nvidia-smi
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
           docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest
-          docker pull 152553844057.dkr.ecr.us-west-2.amazonaws.com/ray:latest
-    
