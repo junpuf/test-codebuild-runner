@@ -4,16 +4,12 @@ CONTAINER_NAME=sglang_test
 IMAGE_URI="152553844057.dkr.ecr.us-west-2.amazonaws.com/sglang:latest"
 HUGGING_FACE_HUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id HUGGING_FACE_HUB_TOKEN --query SecretString --output text)
 
-# Download ShareGPT dataset if it doesn't exist
-mkdir -p ${HOME}/dataset
-if [ ! -f ${HOME}/dataset/ShareGPT_V3_unfiltered_cleaned_split.json ]; then
-    wget -P ${HOME}/dataset https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json
-fi
-
+# pull the container and cleanup old container if exist
 aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 152553844057.dkr.ecr.us-west-2.amazonaws.com
 docker pull ${IMAGE_URI}
 docker stop ${CONTAINER_NAME} || true
 docker rm -f ${CONTAINER_NAME} || true
+# run container with model
 docker run --name ${CONTAINER_NAME} \
     -d --gpus=all --entrypoint /bin/bash \
     -v ${HOME}/.cache/huggingface:/root/.cache/huggingface \
@@ -24,8 +20,15 @@ docker run --name ${CONTAINER_NAME} \
     ${IMAGE_URI} \
     -c "python -m sglang.launch_server --model-path Qwen/Qwen3-0.6B --reasoning-parser qwen3"
 sleep 60
-set -x
 docker logs ${CONTAINER_NAME}
+set -x
+# Download ShareGPT dataset if it doesn't exist
+mkdir -p ${HOME}/dataset
+if [ ! -f ${HOME}/dataset/ShareGPT_V3_unfiltered_cleaned_split.json ]; then
+    echo "Downloading ShareGPT dataset..."
+    wget -P ${HOME}/dataset https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json
+fi
+# run serving benchmark
 docker exec ${CONTAINER_NAME} python3 -m sglang.bench_serving \
     --backend sglang \
   	--host 127.0.0.1 --port 30000 \
@@ -33,6 +36,6 @@ docker exec ${CONTAINER_NAME} python3 -m sglang.bench_serving \
   	--model Qwen/Qwen3-0.6B \
     --dataset-name sharegpt \
     --dataset-path /dataset/ShareGPT_V3_unfiltered_cleaned_split.json
-
+# cleanup container
 docker stop ${CONTAINER_NAME}
 docker rm -f ${CONTAINER_NAME}
