@@ -1,4 +1,4 @@
-FROM sglang:latest
+FROM lmsysorg/sglang:latest
 LABEL maintainer="junpufan@gmail.com"
 
 
