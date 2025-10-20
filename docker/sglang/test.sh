@@ -14,3 +14,6 @@ sleep 60
 
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
+
+# docker kill $(docker ps -q) || true
+# docker rm -f $(docker ps -a -q)
